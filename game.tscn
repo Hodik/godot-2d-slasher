@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxij4it2odvel"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_rlxa4"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_01xbi"]
+[ext_resource type="PackedScene" uid="uid://jpxwa8gtwhe0" path="res://armed_player.tscn" id="2_y78eo"]
+[ext_resource type="PackedScene" uid="uid://d0t0dhlnh8nou" path="res://armed_enemy.tscn" id="3_0qc3x"]
+
+[node name="game" type="Node2D"]
+script = ExtResource("1_rlxa4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(465, 199)
+script = ExtResource("2_01xbi")
+
+[node name="armed_player" parent="." instance=ExtResource("2_y78eo")]
+
+[node name="armed_enemy" parent="." instance=ExtResource("3_0qc3x")]
+position = Vector2(851, 220)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://jpxwa8gtwhe0"]
+
+[ext_resource type="PackedScene" uid="uid://g3laekh2uctb" path="res://player.tscn" id="1_skndm"]
+[ext_resource type="PackedScene" uid="uid://td88lqkm5q2d" path="res://hand.tscn" id="2_yqaq6"]
+
+[node name="armed_player" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_skndm")]
+
+[node name="hand" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_yqaq6")]
+player = NodePath("../Player")
