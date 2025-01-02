@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://xcrslmgpmhm2"]
+[gd_scene load_steps=6 format=3 uid="uid://xcrslmgpmhm2"]
 
 [ext_resource type="Texture2D" uid="uid://c3xc8gkcp2fps" path="res://art/Sharp Game Sword Illustration.png" id="1_1rmn3"]
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="1_c6lix"]
@@ -9,6 +9,9 @@ bounce = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7k4uq"]
 size = Vector2(246.27, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8h2t"]
+size = Vector2(361, 58)
 
 [node name="sword" type="RigidBody2D" groups=["weapons"]]
 z_index = 5
@@ -38,3 +41,10 @@ collision_mask = 3
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DamageArea"]
 position = Vector2(184.865, -1.5)
 shape = SubResource("RectangleShape2D_7k4uq")
+
+[node name="InteractableArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+position = Vector2(133.5, -2)
+shape = SubResource("RectangleShape2D_a8h2t")
