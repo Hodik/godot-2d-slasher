@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="2d-slasher"
+run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+WeaponManager="*res://scripts/weapon_manager.gd"
 
 [display]
 
@@ -24,6 +29,7 @@ window/stretch/mode="canvas_items"
 
 weapons=""
 playable=""
+game=""
 
 [input]
 

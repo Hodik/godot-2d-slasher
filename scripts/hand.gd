@@ -18,46 +18,64 @@ var in_area_of: Array[Node2D] = []
 
 
 func _ready() -> void:
-	angular_damp = 20.0
-	linear_damp = 5.0
+	angular_damp = 0.0
+	linear_damp = 0.0
 	if weapon != null:
 		attach_weapon(weapon)
 
 
 func attach_weapon(_weapon: Weapon) -> void:
-	self.weapon = _weapon
-	_weapon.player = player
+	WeaponManager.pick_up_weapon(_weapon, self)
 	_weapon.global_position = global_position
+	weapon = _weapon
+	_weapon.player = player
+
+	setup_joints(_weapon)
+
+
+func setup_joints(_weapon: Weapon) -> void:
 	pinjoint1 = PinJoint2D.new()
-	pinjoint2 = PinJoint2D.new()
-	pinjoint1.global_position = global_position - Vector2(2, 0)
-	pinjoint2.global_position = global_position + Vector2(2, 0)
-	pinjoint1.node_a = self.get_path()
-	pinjoint2.node_b = _weapon.get_path()
-	pinjoint1.node_b = _weapon.get_path()
-	pinjoint2.node_a = self.get_path()
+	pinjoint1.softness = 0.0
+	
 	add_child(pinjoint1)
+
+	pinjoint1.node_a = get_path()
+	pinjoint1.node_b = _weapon.get_path()
+	pinjoint1.position = global_position.normalized() * 10
+
+	pinjoint2 = pinjoint1.duplicate()
+
 	add_child(pinjoint2)
+
+	pinjoint2.position = -global_position.normalized() * 10
 
 
 func detach_weapon() -> void:
-	remove_child(pinjoint1)
-	remove_child(pinjoint2)
-	self.weapon = null
+	if weapon:
+		remove_child(pinjoint1)
+		remove_child(pinjoint2)
+		pinjoint1.queue_free()
+		pinjoint2.queue_free()
+		WeaponManager.drop_weapon(weapon, self)
+		self.weapon = null
 
 
 func _physics_process(delta: float) -> void:
 	movement_behavior.call(delta)
 	clamp_position()
+	
 
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("move_weapon"):
 		if weapon != null:
 			detach_weapon()
-		else:
-			attach_weapon(in_area_of[len(in_area_of) - 1])
+		elif in_area_of.size() > 0:
+			attach_weapon(in_area_of[in_area_of.size() - 1])
+
 
 func set_movement_behavior(behavior: Callable) -> void:
 	movement_behavior = behavior
+
 
 func follow_mouse(_delta: float) -> void:
 	var target_position = get_global_mouse_position()
@@ -75,6 +93,10 @@ func orbit_character(_delta: float) -> void:
 		var angle = time * rotation_speed
 		var offset = Vector2(cos(angle), sin(angle)) * max_radius
 		angular_velocity = clamp(offset.angle() * rotation_speed, -max_angular_velocity, max_angular_velocity)
+
+
+func do_nothing(_delta: float) -> void:
+	pass
 
 
 func clamp_position() -> void:

@@ -14,14 +14,10 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	print("body entered")
 	if body is Hand:
 		body.in_area_of.append(self)
-		print(body.in_area_of)
 
 
 func _on_body_exited(body: Node2D) -> void:
-	print("body exited")
 	if body is Hand:
 		body.in_area_of.erase(self)
-		print(body.in_area_of)
