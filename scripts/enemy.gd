@@ -35,6 +35,8 @@ func _on_player_detection_area_body_exited(body: Node) -> void:
         tracking_player = null
 
 func _physics_process(delta: float) -> void:
+    super._physics_process(delta)
+
     var target: Vector2 = target_position()
     if not is_dead:
         var to_target = (target - global_position)

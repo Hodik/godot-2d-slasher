@@ -4,6 +4,7 @@ class_name Weapon
 @export var damage: float = 10.0
 @export var player: CharacterBody2D
 @export var disabled_velocity_threshold: float = 0.5
+@export var hit_body_timeout: float = 0.5
 
 enum State {
 	IDLE,
@@ -12,6 +13,9 @@ enum State {
 }
 
 var state: State = State.IDLE
+
+
+var hit_bodies: Dictionary = {}
 
 
 func _ready() -> void:
@@ -42,11 +46,25 @@ func _on_dmg_body_entered(body: Node2D) -> void:
 		var impact_point = body.global_position - global_position
 		var angular_impact = angular_velocity * impact_point.length()
 		var total_velocity = linear_velocity + Vector2(angular_impact, angular_impact)
-		body.take_damage(self, total_velocity)
+
+		if !hit_bodies.has(body):
+			hit_bodies[body] = Timer.new()
+			hit_bodies[body].one_shot = true
+			hit_bodies[body].wait_time = hit_body_timeout
+			hit_bodies[body].timeout.connect(_on_hit_body_timeout.bind(body))
+			add_child(hit_bodies[body])
+
+			hit_bodies[body].start()
+			body.take_damage(self, total_velocity)
 
 
 func _on_dmg_body_exited(_body: Node2D) -> void:
 	pass
+
+
+func _on_hit_body_timeout(body: Node2D) -> void:
+	hit_bodies[body].queue_free()
+	hit_bodies.erase(body)
 
 
 func fly() -> void:

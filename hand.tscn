@@ -8,7 +8,7 @@ radius = 19.0
 
 [node name="hand" type="RigidBody2D"]
 collision_mask = 0
-mass = 5.0
+mass = 10.0
 gravity_scale = 0.0
 script = ExtResource("1_esw5v")
 

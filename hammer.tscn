@@ -17,7 +17,7 @@ size = Vector2(267, 134)
 z_index = 5
 collision_layer = 4
 collision_mask = 6
-mass = 10.0
+mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_cs4aa")
 gravity_scale = 0.0
 center_of_mass_mode = 1
@@ -34,7 +34,8 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
 z_index = 2
-position = Vector2(184.75, -3.875)
+position = Vector2(1108.33, -22.9678)
+scale = Vector2(6.02352, 5.74195)
 shape = SubResource("RectangleShape2D_7k4uq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -51,7 +52,7 @@ texture = ExtResource("3_pdwkc")
 [node name="InteractableArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
-position = Vector2(101.5, -8)
+position = Vector2(101, -4)
 shape = SubResource("RectangleShape2D_j73sd")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

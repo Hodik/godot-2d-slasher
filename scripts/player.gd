@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 	calculate_movement()
 
 func _physics_process(delta: float) -> void:
-	# Apply movement in physics process
+	super._physics_process(delta)
 	if movement_vector.length() > 0:
 		velocity = movement_vector
 		move_and_collide(velocity)
